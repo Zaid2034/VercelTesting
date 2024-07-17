@@ -3,9 +3,12 @@ const app = express ();
 app.use(express.json())
 // const cors = require ('cors');
 // app.use(cors())
-
+const zod = require ('zod');
+const jwt = require ('jsonwebtoken');
+const dotenv = require ('dotenv');
 const {User, TrackingToken} = require ('./db');
-
+dotenv.config ();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.get('/',async(req,res)=>{
     const user=await User.findOne({
