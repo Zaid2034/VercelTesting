@@ -6,15 +6,12 @@ const zod = require ('zod');
 const {User, TrackingToken} = require ('./db');
 const jwt = require ('jsonwebtoken');
 const dotenv = require ('dotenv');
-app.use(cors())
-// app.use (
-//   cors ({
-//     origin:'*',
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//     allowedHeaders: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-//   })
-// );
+// app.use(cors())
+app.use (
+  cors ({
+    origin:'*'
+  })
+);
 dotenv.config ();
 const JWT_SECRET = process.env.JWT_SECRET;
 
