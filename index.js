@@ -1,7 +1,15 @@
 const express = require ('express');
 const app = express ();
-
 app.use(express.json())
+const cors = require ('cors');
+const corsConfig = {
+  origin: '*',
+  Credential: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+app.options ('', cors (corsConfig));
+app.use (cors (corsConfig));
+
 const {User, TrackingToken} = require ('./db');
 
 
