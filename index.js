@@ -29,6 +29,11 @@ const signUpSchema = zod.object ({
   username: zod.string (),
   password: zod.string (),
 });
+const signinBody = zod.object ({
+  email: zod.string (),
+  password: zod.string (),
+});
+
 app.post ('/signup', async (req, res) => {
   console.log ('In signup');
   console.log ('jwt secret is:', JWT_SECRET);
@@ -65,7 +70,40 @@ app.post ('/signup', async (req, res) => {
     console.log (error);
   }
 });
+app.post ('/signIn', async (req, res) => {
+  try {
+    const {success} = signinBody.safeParse (req.body);
+    if (!success) {
+      return res.status (411).json ({
+        message: 'Incorrect inputs',
+      });
+    }
+    const user = await User.findOne ({
+      email: req.body.email,
+      password: req.body.password,
+    });
 
+    if (user) {
+      const token = jwt.sign (
+        {
+          userId: user._id,
+        },
+        JWT_SECRET
+      );
+
+      res.json ({
+        message: 'Signed In successfully',
+        token: token,
+      });
+      return;
+    }
+    res.status (411).json ({
+      message: 'Error while logging in',
+    });
+  } catch (error) {
+    console.log (error);
+  }
+});
 
 app.listen(3000,()=>{
     console.log("Server is running")
