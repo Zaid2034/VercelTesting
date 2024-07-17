@@ -1,13 +1,13 @@
 const express = require ('express');
 const app = express ();
 app.use(express.json())
-// const cors = require ('cors');
-// app.use (
-//   cors ({
-//     origin: '*',
-//     credentials: true,
-//   })
-// );
+const cors = require ('cors');
+app.use (
+  cors ({
+    origin: '*',
+    credentials: true,
+  })
+);
 
 app.get('/',async(req,res)=>{
     res.json({
