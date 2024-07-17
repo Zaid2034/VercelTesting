@@ -1,7 +1,7 @@
 const express = require ('express');
 const app = express ();
 app.use(express.json())
-// const cors = require ('cors');
+const cors = require ('cors');
 // app.use(cors())
 const zod = require ('zod');
 const jwt = require ('jsonwebtoken');
@@ -9,6 +9,13 @@ const dotenv = require ('dotenv');
 const {User, TrackingToken} = require ('./db');
 dotenv.config ();
 const JWT_SECRET = process.env.JWT_SECRET;
+app.use (
+  cors ({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+
 
 const signUpSchema = zod.object ({
   email: zod.string (),
